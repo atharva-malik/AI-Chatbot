@@ -10,9 +10,8 @@ import tensorflow as tf
 from tensorflow.keras import Sequential
 from tensorflow.keras.layers import Dense, Dropout
 
-# nltk.download("punkt") #! Just uncomment these from time to time to download the required packages
-# nltk.download("wordnet")
-# nltk.download("omw-1.4")
+nltk.download("punkt")
+nltk.download("wordnet")
 
 # initializing lemmatizer to get stem of words
 lemmatizer = WordNetLemmatizer()
@@ -51,7 +50,8 @@ classes = sorted(set(classes))
 # list for training data
 training = []
 out_empty = [0] * len(classes)
-# creating the bag of words model
+
+# creating the bag if words model
 for idx, doc in enumerate(doc_X):
     bow = []
     text = lemmatizer.lemmatize(doc.lower())
@@ -76,7 +76,7 @@ train_Y = np.array(list(training[:, 1]))
 # defining some parameters
 input_shape = (len(train_X[0]),)
 output_shape = len(train_Y[0])
-epochs = 10 #! Change this to 2000 for better results
+epochs = 200 #! Change this to 2000 for better results
 
 # the deep leaning model
 model = Sequential()
@@ -108,7 +108,6 @@ def bag_of_words(text, vocab):
 
 def pred_class(text, vocab, labels): 
     bow = bag_of_words(text, vocab)
-    print(bow)
     result = model.predict(np.array([bow]))[0]
     thresh = 0.2
     y_pred = [[idx, res] for idx, res in enumerate(result) if res > thresh]
@@ -119,12 +118,11 @@ def pred_class(text, vocab, labels):
     return return_list
 
 def get_response(intents_list, intents_json): 
-    tag = intents_list
+    tag = intents_list[0]
     list_of_intents = intents_json["intents"]
-    print(tag)
     for i in list_of_intents: 
         if i["tag"] == tag:
-            result = i["responses"]
+            result = random.choice(i["responses"])
         break
     return result
 
