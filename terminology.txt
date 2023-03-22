@@ -1,0 +1,3 @@
+Label: Thing you are trying to predict
+Eval: When talking data frames, this particular one is used to evaluate the model to establish accuracy
+Linear regression: A statistical method for predicting a continuous value #https://www.tensorflow.org/tutorials/estimator/linear
